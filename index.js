@@ -122,7 +122,7 @@ app.put('/api/v1/tareas/:id', async (req, res) => {
     id = new ObjectId(id)
     let modificacion = {}
 
-    if (taskdata.tarea){
+    if (taskdata.titulo){
         modificacion.tarea = taskdata.tarea
     }
     if (taskdata.descripcion){
