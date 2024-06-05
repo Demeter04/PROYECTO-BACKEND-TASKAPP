@@ -1,33 +1,53 @@
 
 /* ALINEA EL TITULO Y IGUAL AJUSTA EL TAMAÑO DE LA LETRA */
 
+
 h1 {
+    color: var(--beige);
     text-align: center;
     padding-top: 40px;
     font-size: 64px;
 }
 
+.button-agregar-filtro-tarea{
+    position: absolute;
+    top: 22dvh;
+    margin-left: 1dvw;
+    width: 50px;
+    height: 50px;
+    background-color: var(--gris);
+    color: var(--blanco);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    padding: 9px;
+}
+
+.filtro, .filtro section, .filtro option{
+    display: grid;
+}
 /* SECTION PARA FILTRAR ENTRE LOS ESTADOS */
 
 .filtro {
-    display: block;
-    margin: 32px auto;
-    border: none;
+    font-weight: 600;
+    margin: 0px auto;
+    margin-top: 32px;
+    place-items: center;
     padding: 8px;
-    border-radius: 20px;
-    background-color: var(--beige);
+    border-radius: 50px;
+    background-color: var(--gris);
 }
 
 /* BOTON PARA AGREGAR UNA TAREA, AJUSTA POSICION, COLOR, BORDE, LOCALIZACION */
 
 .button-agregar-tarea {
     position: absolute;
-    right: 32px;
-    top: 32px;
+    right: 2vw;
+    top: 20px;
     width: 52px;
     height: 52px;
-    background-color: var(--cafe);
-    color: var(--beige);
+    background-color: var(--beige);
+    color: var(--black);
     border-radius: 50%;
     display: grid;
     place-items: center;
@@ -56,6 +76,8 @@ h1 {
 /* AJUSTAR LA POSICION DEL TITULO H2 DEL FORMULARIO */
 
 .crear-tarea h2 {
+    font-weight: 700;
+    color: #000;
     text-align: center;
     font-size: 20px;
     text-transform: uppercase;
@@ -64,8 +86,8 @@ h1 {
 /* BOTON CERRAR LA VENTANA DE CREAR TAREA*/
 
 .button-cerrar {
-    background-color: var(--cafe);
-    color: var(--beige);
+    background-color: var(--gris);
+    color: var(--negro);
     width: 32px;
     height: 32px;
     top: 16px;
@@ -79,6 +101,7 @@ h1 {
 }
 
 .crear-tarea label {
+    color: var(--black);
     gap: 8px
 }
 
@@ -88,7 +111,7 @@ h1 {
 .crear-tarea {
     z-index: 1;
     position: fixed;
-    background-color: var(--cafe-oscuro-transparente);
+    background-color: var(--cafe-transparente);
     top: 0;
     left: 0;
     height: 100vh;
@@ -98,24 +121,27 @@ h1 {
 
 .crear-tarea form {
     width: 300px;
-    background-color: var(--verde);
+    background-color: var(--cafe-claro);
     padding: 32px;
     border-radius: 20px;
 }
 
 .crear-tarea form input, .crear-tarea form textarea {
-    background-color: var(--beige);
+    background-color: var(--blanco);
     padding: 8px;
     border-radius: 20px;
 }
 
 .button-enviar {
-    padding: 8px 16px;
-    border-radius: 20px;
-    justify-self: flex-end;
-    margin-top: 16px;
-    background-color: var(--cafe);
-    color: var(--beige);
+    display: grid;
+    justify-self: right;
+    place-items: center;
+    padding: 8px;
+    border-radius: 25px;
+    height: 30px;
+    width: 40px;
+    background-color: var(--verde-oscuro);
+    color: var(--blanco);
 }
 
 .lista-tareas {
@@ -124,9 +150,9 @@ h1 {
     gap: 18px;
     padding: 1%;
     border-radius: 32px;
-    background-color: var(--beige);
+    background-color: var(--otro-blanco);
     place-items: center;
-    margin: auto 2dvw;
+    margin: 11dvh 2dvw;
 
 }
 
@@ -134,11 +160,12 @@ h1 {
     margin-top: 10px;
     width: 70vw;
     padding: 15px;
-    background-color: var(--verde);
+    background-color: var(--cafe-claro);
     border-radius: 20px;
 }
 
 .lista-tareas li h4 {
+    color: var(--black);
     text-align: center;
     font-size: 20px;
     text-transform: uppercase;
@@ -148,7 +175,7 @@ h1 {
     text-transform: lowercase;
     word-spacing: 3px;
     text-align: left;
-    color: black;
+    color:var(--blanco);
     font-size: 14px;
     text-transform: uppercase;
 }
@@ -165,7 +192,7 @@ h1 {
 }
 
 .wrapper-botones button {
-    background-color: var(--cafe);
+    background-color: var(--verde-oscuro);
     color: var(--beige);
     padding: 8px 16px;
     border-radius: 20px;

@@ -1,12 +1,30 @@
 body {
-    background-color: #cdb28a;
+    background-color: var(--verde-oscuro);
     color: #f9f4e3;
     font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 :root {
-    --cafe: #7a6448;
-    --cafe-oscuro-transparente: #41352688;
-    --beige: #f9f4e3;
+
+    --verde-oscuro: #174D4D;
     --verde: #b1ba8e;
+    --celeste-notable: #4DBDEB;
+    --blanco: #FFFFFF; 
+    --celeste-claro: #DFEEEE;
+    --amarillo: #FFE08C;
+    --cafe-claro: #BEAB72;
+    --negro: #333333;
+    --black: #010101;
+    --gris: #C6C6C6;
+    --beige: #f9f4e3;
+    --cafe-transparente: #100d0a88;
+    --otro-blanco: #F8F9F9;
+
+
+
+
+    /* --cafe: #7a6448;
+    --cafe-oscuro-transparente: #41352688;
+    
+    --verde: #b1ba8e; */
 }

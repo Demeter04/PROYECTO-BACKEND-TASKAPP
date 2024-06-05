@@ -114,6 +114,8 @@ const renderTareas = async () => {
 
 }
 
+
+
 // -----------------------  Abrir y Cerrar ventana crear tarea -----------------------
 const wrapperFormCrear = document.getElementById('wrapper-form-crear')
 
@@ -126,6 +128,31 @@ const buttonCerrarFormCrear = document.getElementById('cerrar-form-crear')
 buttonCerrarFormCrear.addEventListener('click', () => {
     wrapperFormCrear.style.display = 'none'
 })
+
+
+
+// ------------------------------- Abrir FILTRO -----------------------------
+const wrapperFormFiltro = document.getElementById('select-estado')
+
+
+const buttonAbrirFormFiltro = document.getElementById('filtrar-tareas')
+buttonAbrirFormFiltro.addEventListener("click", () =>{
+    if (wrapperFormFiltro.style.display === "none")
+        {
+            wrapperFormFiltro.style.display = "grid"
+        }
+    else{
+        wrapperFormFiltro.style.display = "none"
+    }
+} )
+
+
+/* buttonAbrirFormFiltro.addEventListener('click', () => {
+    wrapperFormFiltro.style.display = 'grid'
+})
+ */
+
+
 
 // -----------------------  Abrir ventana editar tarea -----------------------
 const buttonCerrarFormEditar = document.getElementById('cerrar-form-editar')
