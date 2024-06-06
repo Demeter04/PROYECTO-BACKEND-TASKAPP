@@ -29,6 +29,7 @@ h1 {
 /* SECTION PARA FILTRAR ENTRE LOS ESTADOS */
 
 .filtro {
+    display: none;
     font-weight: 600;
     margin: 0px auto;
     margin-top: 32px;
@@ -185,6 +186,8 @@ h1 {
     gap: 16px;
     margin-bottom: 16px;
 }
+
+/* BOTONES PARA EDITAR LA TAREA */
 
 .wrapper-botones {
     display: flex;
