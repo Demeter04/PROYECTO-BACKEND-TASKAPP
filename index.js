@@ -2,14 +2,16 @@ import bodyParser from "body-parser"
 import express from "express"
 import client from "./db.js"
 import { ObjectId } from "mongodb"
+import cors from "cors"
 
 
 const app = express()
-const port = 3000 
+const port = 3000
 
 
 // PERMITE RECIBIR DATOS EN EL BODY EN FORMATO JSON
 app.use(bodyParser.json())
+app.use(cors())
 
 // DB info
 const dbName = 'Task_app'
@@ -19,6 +21,9 @@ const tasksCollectionName = 'tasks'
 // Obtener Todo
 app.get('/api/v1/tareas', async (req, res) => {
 
+    const estado = req.query.estado
+    
+
     // 1. Conexion a la DB
     await client.connect()
     // 2. Seleccionar la DB
@@ -26,9 +31,16 @@ app.get('/api/v1/tareas', async (req, res) => {
     // 3. Seleccionar la coleccion
     const tasksCollection = taskAppDB.collection(tasksCollectionName)
 
+    let filtro = {}
+    if(estado === "activa" || estado === "finalizada" || estado === "inactiva"){
+
+        filtro = {estado: estado}
+
+    }
+
     // 4. Realizar la query
 
-    const takslist = await tasksCollection.find({}).toArray()
+    const takslist = await tasksCollection.find(filtro).toArray()
 
     // 5. Cerrar conexion
     await client.close()
@@ -53,9 +65,9 @@ app.get('/api/v1/tareas/:id', async (req, res) => {
 
     // 4. Realizar la query
 
-    id = ObjectId(id)
-    
-    await tasksCollection.findOne({
+    id = new ObjectId(id)
+
+    const tarea = await tasksCollection.findOne({
         _id: id,
     })
 
@@ -64,14 +76,15 @@ app.get('/api/v1/tareas/:id', async (req, res) => {
 
 
     res.json({
-        message: 'documento entregado'
+        message: 'documento entregado',
+        data: tarea
     })
 })
 
 // Crear
 app.post('/api/v1/tareas', async (req, res) => {
 
-    const taskdata = req.body 
+    const taskdata = req.body
 
     // 1. Conexion a la DB
     await client.connect()
@@ -110,7 +123,7 @@ app.put('/api/v1/tareas/:id', async (req, res) => {
     const taskdata = req.body
     let id = req.params.id
 
-    
+
 
     // 1. Conexion a la DB
     await client.connect()
@@ -122,25 +135,25 @@ app.put('/api/v1/tareas/:id', async (req, res) => {
     id = new ObjectId(id)
     let modificacion = {}
 
-    if (taskdata.titulo){
+    if (taskdata.titulo) {
         modificacion.tarea = taskdata.tarea
     }
-    if (taskdata.descripcion){
+    if (taskdata.descripcion) {
         modificacion.descripcion = taskdata.descripcion
     }
-    if (taskdata.estado){
+    if (taskdata.estado) {
         modificacion.estado = taskdata.estado
     }
-    if (taskdata.responsable){
+    if (taskdata.responsable) {
         modificacion.responsable = taskdata.responsable
     }
     // 4. Realizar la query
 
 
     await tasksCollection.updateOne(
-        {_id: id},
+        { _id: id },
         {
-           $set:modificacion
+            $set: modificacion
 
         }
 
@@ -156,7 +169,10 @@ app.put('/api/v1/tareas/:id', async (req, res) => {
 })
 
 // Eliminar
-app.delete('/', async (req, res) => {
+app.delete('/api/v1/tareas/:id', async (req, res) => {
+
+    
+    let id = req.params.id 
 
     // 1. Conexion a la DB
     await client.connect()
@@ -165,15 +181,16 @@ app.delete('/', async (req, res) => {
     // 3. Seleccionar la coleccion
     const tasksCollection = taskAppDB.collection(tasksCollectionName)
 
+    id = new ObjectId(id)
+
     // 4. Realizar la query
 
-
-
+    const tareaEliminada = await tasksCollection.deleteOne({_id: id})
     // 5. Cerrar conexion
     await client.close()
 
     res.json({
-        message: 'documento eliminado'
+        message: 'documento eliminado',
     })
 })
 
