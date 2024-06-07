@@ -1,27 +1,27 @@
-const tareas = [
+let tareas = [
     {
-        "_id":"1",
-        "titulo":"comprar el mercado",
-        "descripcion":{
-            "comida":"jamon,queso,comida perro",
-            "Jugos":"Verdura para jugo"
+        "_id": "1",
+        "titulo": "comprar el mercado",
+        "descripcion": {
+            "comida": "jamon,queso,comida perro",
+            "Jugos": "Verdura para jugo"
         },
-        "estado":"inactiva",
-        "responsable":"Oscar Urrego"
+        "estado": "inactiva",
+        "responsable": "Oscar Urrego"
     },
     {
-        "_id":"2",
-        "titulo":"Pagar el arriendo",
-        "descripcion":"Pagar el arriendo antes del dia 10 de Julio",
-        "estado":"inactiva",
-        "responsable":"Oscar Urrego"
+        "_id": "2",
+        "titulo": "Pagar el arriendo",
+        "descripcion": "Pagar el arriendo antes del dia 10 de Julio",
+        "estado": "inactiva",
+        "responsable": "Oscar Urrego"
     },
     {
-        "_id":"3",
-        "titulo":"Gimnasio",
-        "descripcion":"Pagar el arriendo antes del dia 10 de Julio",
-        "estado":"inactiva",
-        "responsable":"Oscar Urrego"
+        "_id": "3",
+        "titulo": "Gimnasio",
+        "descripcion": "Pagar el arriendo antes del dia 10 de Julio",
+        "estado": "inactiva",
+        "responsable": "Oscar Urrego"
     },
     {
         "_id": "4",
@@ -34,7 +34,7 @@ const tareas = [
 
 const crearTarea = async (tarea) => {
     // enviar consulta a la API para crear una tarea
-    tarea.estado="inactiva"
+    tarea.estado = "inactiva"
     tareas.push(tarea)
 }
 
@@ -49,39 +49,78 @@ const verTarea = async (id) => {
     // enviar consulta a la API para obtener la tarea con el id
     // alert('tarea obtenida')
 
+    const tareaEncontradaId = tareas.find((tarea) => {
 
-    return {
+        if (id === tarea._id) {
+            return true
+        }
+        return false
+    })
+
+    if (tareaEncontradaId) {
+        return tareaEncontradaId
+    } else {
+        alert("Tarea no encontrada")
+    }
+
+
+    /* return {
         "_id": "4",
         "titulo": "caminata en las mañanas",
         "descripcion": "salir a caminar en las mañanas",
         "estado": "activa",
         "responsable": "sebas"
-    }
+    } */
 }
 
 const editarTarea = async (id, tareaEditada) => {
     // enviar consulta a la API para obtener la tarea con el id
-    alert('tarea editada')
+    // alert('tarea editada')
+
+    const ListaTareasModificadas = tareas.map((tarea) => {
+
+        if (id === tarea._id) {
+            tareaEditada._id = id
+            return tareaEditada
+        }
+
+    })
+    console.log(ListaTareasModificadas)
+    tareas = ListaTareasModificadas
+
+
+
 }
 
 
 const eliminarTarea = async (id) => {
     // enviar consulta a la API para eliminar la tarea con el id
-    alert('tarea eliminada')
+
+    const tareasfiltroEliminar = tareas.filter((tarea) => {
+
+        if (tarea._id != id) {
+            return true
+        }
+        return false
+    })
+
+    tareas = tareasfiltroEliminar
+
 }
 
 // -----------------------  Renderizar tareas en el HTML , FILTRO -----------------------
 const listaTareas = document.getElementById('lista-tareas')
 const renderTareas = async () => {
 
+    listaTareas.innerHTML = ""
 
     const ListTareasObtenidas = await obtenerTareas()
-    console.log(ListTareasObtenidas)
+    //console.log(ListTareasObtenidas)
 
-  
+
     // BUCLE CON CALLBACK
-    ListTareasObtenidas.forEach((tarea)=> {
-        console.log(tarea._id)
+    ListTareasObtenidas.forEach((tarea) => {
+        //console.log(tarea._id)
 
 
         const li = document.createElement("li")
@@ -103,7 +142,7 @@ const renderTareas = async () => {
         data.appendChild(tareaTitulo)
         data.appendChild(estado)
         data.appendChild(responsable)
-        
+
         article.appendChild(data)
         li.appendChild(article)
         //AGREGAR DE HIJO A LAS LISTAS
@@ -127,13 +166,13 @@ const renderTareas = async () => {
         wrapperBotones.appendChild(buttonEliminar)
 
         article.appendChild(wrapperBotones)
-        
 
- //----------------- AGREGAR ACCION AL BOTON VER MAS 
+
+        //----------------- AGREGAR ACCION AL BOTON VER MAS 
 
         buttonVerMas.addEventListener("click", async () => {
 
-           // console.log(tarea._id)
+            // console.log(tarea._id)
             const tareaObtenida = await verTarea(tarea._id)
             // console.log(tareaObtenida)
 
@@ -143,16 +182,16 @@ const renderTareas = async () => {
 
             buttonVerMas.disabled = true
         })
-    // ------------------ AGREGAR ACCION AL BOTON EDITAR 
+        // ------------------ AGREGAR ACCION AL BOTON EDITAR 
 
         buttonEditar.addEventListener("click", async () => {
-            
+
             const wrapperFormEditar = document.getElementById("wrapper-form-editar")
             wrapperFormEditar.style.display = "grid"
 
-            const tareaidObtenida = await verTarea(tarea.id)
-            console.log(tarea._id)
-            
+            const tareaidObtenida = await verTarea(tarea._id)
+            //console.log(tarea._id)
+
 
             const editarTitulo = document.getElementById("editar-titulo")
             const editarDescripcion = document.getElementById("editar-descripcion")
@@ -166,31 +205,43 @@ const renderTareas = async () => {
 
             const formEditarTarea = document.getElementById("form-editar-tarea")
 
-        // ------------------ EDITAR TAREA
-          formEditarTarea.addEventListener("submit", async (event) => {
 
-            event.preventDefault()
+            // ------------------ EDITAR TAREA
+            formEditarTarea.addEventListener("submit", async (event) => {
 
-            const datosEditados = Object.fromEntries(new FormData(event.target))
-            console.log(datosEditados)
+                event.preventDefault()
 
-            await editarTarea(tarea._id, datosEditados)
+                const datosEditados = Object.fromEntries(new FormData(event.target))
+                //console.log(datosEditados)
 
-            wrapperFormEditar.style.display = "none"
+                await editarTarea(tarea._id, datosEditados)
 
-
-            renderTareas()
+                wrapperFormEditar.style.display = "none"
 
 
-          })   
+                renderTareas()
+
+
+            })
 
         })
 
+        // ------------------AGREGAR EVENTO AL BOTON ELIMINAR
+
+        buttonEliminar.addEventListener("click", async () => {
+
+            eliminarTarea(tarea._id)
+
+            renderTareas()
+
+        })
+
+
     })
 
-
-
 }
+
+
 
 
 
@@ -214,15 +265,14 @@ const wrapperFormFiltro = document.getElementById('select-estado')
 
 
 const buttonAbrirFormFiltro = document.getElementById('filtrar-tareas')
-buttonAbrirFormFiltro.addEventListener("click", () =>{
-    if (wrapperFormFiltro.style.display === "none")
-        {
-            wrapperFormFiltro.style.display = "grid"
-        }
-    else{
+buttonAbrirFormFiltro.addEventListener("click", () => {
+    if (wrapperFormFiltro.style.display === "none") {
+        wrapperFormFiltro.style.display = "grid"
+    }
+    else {
         wrapperFormFiltro.style.display = "none"
     }
-} )
+})
 
 
 /* buttonAbrirFormFiltro.addEventListener('click', () => {
@@ -247,16 +297,12 @@ formCrearTarea.addEventListener('submit', async (event) => {
     event.preventDefault()
 
     const data = Object.fromEntries(new FormData(event.target))
-    console.log(data)
-
-    console.log(data.titulo)
 
     await crearTarea(data)
 
     wrapperFormCrear.style.display = "none"
 
     renderTareas()
-
 
 })
 

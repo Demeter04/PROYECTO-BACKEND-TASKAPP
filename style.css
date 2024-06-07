@@ -11,16 +11,17 @@ h1 {
 
 .button-agregar-filtro-tarea{
     position: absolute;
+    left: 1dvw;
     top: 22dvh;
-    margin-left: 1dvw;
     width: 50px;
     height: 50px;
     background-color: var(--gris);
     color: var(--blanco);
     border-radius: 50%;
     display: grid;
+    justify-self: center;
     place-items: center;
-    padding: 9px;
+    padding: 8px;
 }
 
 .filtro, .filtro section, .filtro option{
@@ -38,6 +39,7 @@ h1 {
     border-radius: 50px;
     background-color: var(--gris);
 }
+
 
 /* BOTON PARA AGREGAR UNA TAREA, AJUSTA POSICION, COLOR, BORDE, LOCALIZACION */
 
