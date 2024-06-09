@@ -1,3 +1,5 @@
+let estado = ""
+
 let tareas = [
     {
         "_id": "1",
@@ -34,22 +36,52 @@ let tareas = [
 
 const crearTarea = async (tarea) => {
     // enviar consulta a la API para crear una tarea
-    tarea.estado = "inactiva"
-    tareas.push(tarea)
+   
+    await fetch ("https://PROYECTO-FINAL-TASK-BACKEND.vercel.app",{
+        method: "POST",
+        body: JSON.stringify(tarea),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+   /* tarea.estado = 'inactiva'
+    tareas.push(tarea) */
 }
 
 const obtenerTareas = async () => {
 
     // enviar consulta a la API para obtener todas las tareas
 
-    return tareas
+    let query = ""
+
+    if(estado){
+        query = "?estado =" + estado
+    }
+    
+    const response = await fetch("https://PROYECTO-FINAL-TASK-BACKEND.vercel.app/api/v1/tareas" + query )
+    const data = await response.json()
+
+    return data.data
+    
+    //return tareas
 }
 
 const verTarea = async (id) => {
     // enviar consulta a la API para obtener la tarea con el id
     // alert('tarea obtenida')
 
-    const tareaEncontradaId = tareas.find((tarea) => {
+    const response = await fetch("https://PROYECTO-FINAL-TASK-BACKEND.vercel.app/api/v1/tareas" + id )
+    const data = await response.json()
+
+
+    return data.data
+
+
+
+
+
+   /*  const tareaEncontradaId = tareas.find((tarea) => {
 
         if (id === tarea._id) {
             return true
@@ -62,7 +94,7 @@ const verTarea = async (id) => {
     } else {
         alert("Tarea no encontrada")
     }
-
+ */
 
     /* return {
         "_id": "4",
@@ -77,7 +109,19 @@ const editarTarea = async (id, tareaEditada) => {
     // enviar consulta a la API para obtener la tarea con el id
     // alert('tarea editada')
 
-    const ListaTareasModificadas = tareas.map((tarea) => {
+    await fetch ("https://PROYECTO-FINAL-TASK-BACKEND.vercel.app/api/v1/tareas/" + id ,{
+        method: "PUT",
+        body: JSON.stringify(tareaEditada),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+
+
+
+
+    /* const ListaTareasModificadas = tareas.map((tarea) => {
 
         if (id === tarea._id) {
             tareaEditada._id = id
@@ -86,7 +130,7 @@ const editarTarea = async (id, tareaEditada) => {
 
     })
     console.log(ListaTareasModificadas)
-    tareas = ListaTareasModificadas
+    tareas = ListaTareasModificadas */
 
 
 
@@ -96,6 +140,12 @@ const editarTarea = async (id, tareaEditada) => {
 const eliminarTarea = async (id) => {
     // enviar consulta a la API para eliminar la tarea con el id
 
+    await fetch("https://PROYECTO-FINAL-TASK-BACKEND.vercel.app/api/v1/tareas/" + id, {
+        method: "DELETE"
+    })
+
+
+    /* 
     const tareasfiltroEliminar = tareas.filter((tarea) => {
 
         if (tarea._id != id) {
@@ -105,7 +155,7 @@ const eliminarTarea = async (id) => {
     })
 
     tareas = tareasfiltroEliminar
-
+ */
 }
 
 // -----------------------  Renderizar tareas en el HTML , FILTRO -----------------------
@@ -290,7 +340,7 @@ buttonCerrarFormEditar.addEventListener('click', () => {
     editarTarea.style.display = 'none'
 })
 
-// -----------------------  Crear tarea -----------------------
+// -----------------------  CREAR TAREA -----------------------
 const formCrearTarea = document.getElementById('form-crear-tarea')
 formCrearTarea.addEventListener('submit', async (event) => {
 
@@ -307,9 +357,12 @@ formCrearTarea.addEventListener('submit', async (event) => {
 })
 
 // -----------------------  Filtrar tareas por estado -----------------------
-let estado = ''
-const selectEstado = document.getElementById('select-estado')
+ 
+const SelectEstado = document.getElementById('select-estado')
 selectEstado.addEventListener('change', (e) => {
+    console.log(e.target.value)
+
+    renderTareas()
 })
 
 // --------------------------- APENAS CARGUE LA PAGINA HACER LA FUNCION -----------------
